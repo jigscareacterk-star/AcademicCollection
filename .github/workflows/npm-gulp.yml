@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Digital Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .book-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+        
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-color: rgba(245, 158, 11, 0.5);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .search-bar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-900/95 backdrop-blur-md border-b border-gray-700/50 sticky top-0 z-50 shadow-2xl">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="text-white font-bold text-xl">📚</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Student Digital Library</h1>
+                        <p class="text-xs text-amber-400 font-medium">ACADEMIC COLLECTION</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search academic collection..." 
+                            class="search-bar px-4 py-3 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 w-72 bg-gray-800/80 border border-gray-600/50"
+                        >
+                        <button class="absolute right-3 top-3.5 text-gray-400 hover:text-amber-400 transition-colors">
+                            🔍
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-2 rounded-lg">
+                        <span class="text-sm font-semibold text-white">STUDENT</span>
+                        <span class="text-xs text-white/90">📖</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Category Filter -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">Academic Collection</h2>
+                <div class="flex items-center space-x-2 text-amber-400">
+                    <span class="text-sm font-medium">42 Books Available</span>
+                    <span>📖</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button class="category-btn active px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-white font-medium shadow-lg" data-category="all">
+                    All Books
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="1st">
+                    1st Semester
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="2nd">
+                    2nd Semester
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="3rd">
+                    3rd Semester
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="4th">
+                    4th Semester
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="5th">
+                    5th Semester
+                </button>
+                <button class="category-btn px-6 py-3 rounded-xl bg-gray-800/60 text-gray-300 hover:bg-gray-700/80 hover:text-white border border-gray-600/30 transition-all" data-category="6th">
+                    6th Semester
+                </button>
+            </div>
+        </div>
+
+        <!-- Books Grid -->
+        <div id="booksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Books will be populated by JavaScript -->
+        </div>
+
+        <!-- Download Modal -->
+        <div id="downloadModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+            <div class="bg-gray-800 border border-gray-600 rounded-2xl p-8 max-w-md mx-4 transform transition-all shadow-2xl">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">✅</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Download Started!</h3>
+                    <p class="text-gray-300 mb-6">Your book is being prepared for download.</p>
+                    <button onclick="closeModal()" class="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sample book data
+        const books = [
+            // 1st Semester Books
+            {
+                id: 1,
+                title: "English",
+                author: "Wren & Martin",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "English",
+                pages: 456,
+                size: "8.2 MB",
+                cover: "📖"
+            },
+            {
+                id: 2,
+                title: "History",
+                author: "R.S. Sharma",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "History",
+                pages: 398,
+                size: "11.4 MB",
+                cover: "🏺"
+            },
+            {
+                id: 3,
+                title: "Geography",
+                author: "Savindra Singh",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "Geography",
+                pages: 432,
+                size: "15.6 MB",
+                cover: "🗺️"
+            },
+            {
+                id: 4,
+                title: "Political Science",
+                author: "O.P. Gauba",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "Political Science",
+                pages: 524,
+                size: "12.8 MB",
+                cover: "🏛️"
+            },
+            {
+                id: 5,
+                title: "Education",
+                author: "S.K. Kochhar",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "Education",
+                pages: 368,
+                size: "7.9 MB",
+                cover: "🎓"
+            },
+            {
+                id: 6,
+                title: "Logic & Philosophy",
+                author: "Irving M. Copi",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "Logic & Philosophy",
+                pages: 456,
+                size: "9.7 MB",
+                cover: "🤔"
+            },
+            {
+                id: 7,
+                title: "Assamese",
+                author: "Hiren Gohain",
+                category: "1st",
+                semester: "1st Semester",
+                subject: "Assamese",
+                pages: 298,
+                size: "6.4 MB",
+                cover: "📚"
+            },
+            // 2nd Semester Books
+            {
+                id: 8,
+                title: "English",
+                author: "William J. Long",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "English",
+                pages: 456,
+                size: "8.2 MB",
+                cover: "📖",
+                driveId: "13TJwxcW9ZLCZDTEro1qrlqZbyop5PJbN"
+            },
+            {
+                id: 9,
+                title: "History",
+                author: "Satish Chandra",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "History",
+                pages: 445,
+                size: "13.2 MB",
+                cover: "🏰"
+            },
+            {
+                id: 10,
+                title: "Geography",
+                author: "Majid Husain",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "Geography",
+                pages: 398,
+                size: "11.3 MB",
+                cover: "🏙️"
+            },
+            {
+                id: 11,
+                title: "Political Science",
+                author: "B.L. Fadia",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "Political Science",
+                pages: 478,
+                size: "10.9 MB",
+                cover: "📜"
+            },
+            {
+                id: 12,
+                title: "Education",
+                author: "S.S. Chauhan",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "Education",
+                pages: 412,
+                size: "9.1 MB",
+                cover: "🧠"
+            },
+            {
+                id: 13,
+                title: "Logic & Philosophy",
+                author: "William K. Frankena",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "Logic & Philosophy",
+                pages: 342,
+                size: "7.8 MB",
+                cover: "⚖️"
+            },
+            {
+                id: 14,
+                title: "Assamese",
+                author: "Golok Chandra Goswami",
+                category: "2nd",
+                semester: "2nd Semester",
+                subject: "Assamese",
+                pages: 256,
+                size: "5.2 MB",
+                cover: "📝"
+            },
+            // 3rd Semester Books
+            {
+                id: 15,
+                title: "English",
+                author: "Louis Untermeyer",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "English",
+                pages: 387,
+                size: "8.9 MB",
+                cover: "🎭"
+            },
+            {
+                id: 16,
+                title: "History",
+                author: "Bipan Chandra",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "History",
+                pages: 512,
+                size: "12.4 MB",
+                cover: "🏛️"
+            },
+            {
+                id: 17,
+                title: "Geography",
+                author: "B.N. Mandal",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "Geography",
+                pages: 456,
+                size: "14.7 MB",
+                cover: "💰"
+            },
+            {
+                id: 18,
+                title: "Political Science",
+                author: "M. Laxmikanth",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "Political Science",
+                pages: 624,
+                size: "14.8 MB",
+                cover: "🗳️"
+            },
+            {
+                id: 19,
+                title: "Education",
+                author: "Ralph W. Tyler",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "Education",
+                pages: 298,
+                size: "6.8 MB",
+                cover: "📋"
+            },
+            {
+                id: 20,
+                title: "Logic & Philosophy",
+                author: "S. Radhakrishnan",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "Logic & Philosophy",
+                pages: 524,
+                size: "11.7 MB",
+                cover: "🕉️"
+            },
+            {
+                id: 21,
+                title: "Assamese",
+                author: "Nirmal Prabha Bordoloi",
+                category: "3rd",
+                semester: "3rd Semester",
+                subject: "Assamese",
+                pages: 278,
+                size: "5.9 MB",
+                cover: "🌸"
+            },
+            // 4th Semester Books
+            {
+                id: 22,
+                title: "English",
+                author: "A.C. Bradley",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "English",
+                pages: 445,
+                size: "9.8 MB",
+                cover: "🎪"
+            },
+            {
+                id: 23,
+                title: "History",
+                author: "Roger B. Beck",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "History",
+                pages: 768,
+                size: "18.9 MB",
+                cover: "🌍"
+            },
+            {
+                id: 24,
+                title: "Geography",
+                author: "R.L. Singh",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "Geography",
+                pages: 512,
+                size: "16.4 MB",
+                cover: "🇮🇳"
+            },
+            {
+                id: 25,
+                title: "Political Science",
+                author: "David J. Samuels",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "Political Science",
+                pages: 456,
+                size: "10.2 MB",
+                cover: "🌐"
+            },
+            {
+                id: 26,
+                title: "Education",
+                author: "Bruce Joyce",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "Education",
+                pages: 398,
+                size: "8.7 MB",
+                cover: "👨‍🏫"
+            },
+            {
+                id: 27,
+                title: "Logic & Philosophy",
+                author: "Bertrand Russell",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "Logic & Philosophy",
+                pages: 648,
+                size: "13.5 MB",
+                cover: "💭"
+            },
+            {
+                id: 28,
+                title: "Assamese",
+                author: "Jyotiprasad Agarwala",
+                category: "4th",
+                semester: "4th Semester",
+                subject: "Assamese",
+                pages: 324,
+                size: "7.1 MB",
+                cover: "🎭"
+            },
+            // 5th Semester Books
+            {
+                id: 29,
+                title: "English",
+                author: "David Daiches",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "English",
+                pages: 542,
+                size: "9.8 MB",
+                cover: "📚"
+            },
+            {
+                id: 30,
+                title: "History",
+                author: "Sumit Sarkar",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "History",
+                pages: 478,
+                size: "13.2 MB",
+                cover: "📜"
+            },
+            {
+                id: 31,
+                title: "Geography",
+                author: "Majid Husain",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "Geography",
+                pages: 386,
+                size: "12.7 MB",
+                cover: "🌱"
+            },
+            {
+                id: 32,
+                title: "Political Science",
+                author: "Joshua S. Goldstein",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "Political Science",
+                pages: 567,
+                size: "15.3 MB",
+                cover: "🌏"
+            },
+            {
+                id: 33,
+                title: "Education",
+                author: "Wayne K. Hoy",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "Education",
+                pages: 445,
+                size: "10.2 MB",
+                cover: "🏢"
+            },
+            {
+                id: 34,
+                title: "Logic & Philosophy",
+                author: "John Hick",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "Logic & Philosophy",
+                pages: 398,
+                size: "8.9 MB",
+                cover: "🔬"
+            },
+            {
+                id: 35,
+                title: "Assamese",
+                author: "Homen Borgohain",
+                category: "5th",
+                semester: "5th Semester",
+                subject: "Assamese",
+                pages: 356,
+                size: "7.8 MB",
+                cover: "📖"
+            },
+            // 6th Semester Books
+            {
+                id: 36,
+                title: "English",
+                author: "Bill Ashcroft",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "English",
+                pages: 467,
+                size: "10.4 MB",
+                cover: "🌍"
+            },
+            {
+                id: 37,
+                title: "History",
+                author: "E.H. Carr",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "History",
+                pages: 398,
+                size: "9.7 MB",
+                cover: "📊"
+            },
+            {
+                id: 38,
+                title: "Geography",
+                author: "R.Y. Sundaram",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "Geography",
+                pages: 423,
+                size: "13.8 MB",
+                cover: "🏙️"
+            },
+            {
+                id: 39,
+                title: "Political Science",
+                author: "Andrew Heywood",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "Political Science",
+                pages: 592,
+                size: "15.4 MB",
+                cover: "🗳️"
+            },
+            {
+                id: 40,
+                title: "Education",
+                author: "John Dewey",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "Education",
+                pages: 434,
+                size: "8.9 MB",
+                cover: "🎯"
+            },
+            {
+                id: 41,
+                title: "Logic & Philosophy",
+                author: "Brooke Noel Moore",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "Logic & Philosophy",
+                pages: 512,
+                size: "11.6 MB",
+                cover: "🧩"
+            },
+            {
+                id: 42,
+                title: "Assamese",
+                author: "Nabakanta Barua",
+                category: "6th",
+                semester: "6th Semester",
+                subject: "Assamese",
+                pages: 312,
+                size: "6.8 MB",
+                cover: "🎭"
+            }
+        ];
+
+        let currentCategory = 'all';
+        let searchTerm = '';
+
+        function renderBooks() {
+            const grid = document.getElementById('booksGrid');
+            const filteredBooks = books.filter(book => {
+                const matchesCategory = currentCategory === 'all' || book.category === currentCategory;
+                const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                    book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    book.subject.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            grid.innerHTML = filteredBooks.map(book => `
+                <div class="book-card rounded-2xl p-6 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full -translate-y-16 translate-x-16"></div>
+
+                    <div class="relative z-10">
+                        <div class="inline-block bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">
+                            ${book.category}${book.category === 'all' ? '' : ' SEM'}
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2 line-clamp-2">${book.title}</h3>
+                        <p class="text-amber-400 text-sm font-medium mb-1">${book.subject}</p>
+                        <p class="text-gray-400 text-xs mb-4">${book.semester}</p>
+                        <div class="flex items-center justify-between text-xs text-gray-400 mb-4">
+                            <span>${book.size}</span>
+                            <span>${book.pages} pages</span>
+                        </div>
+                        <button 
+                            onclick="downloadBook('${book.title}')" 
+                            class="download-btn w-full py-3 rounded-xl text-white font-semibold flex items-center justify-center space-x-2 shadow-lg"
+                        >
+                            <span>⬇️</span>
+                            <span>Download PDF</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function downloadBook(title) {
+            const book = books.find(b => b.title === title);
+            
+            if (book && book.driveId && book.driveId !== "YOUR_GOOGLE_DRIVE_FILE_ID_HERE") {
+                // Create a temporary link element for download
+                const link = document.createElement('a');
+                link.href = `https://drive.google.com/uc?export=download&id=${book.driveId}`;
+                link.download = `${book.title}.pdf`;
+                link.target = '_blank';
+                
+                // Trigger the download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showDownloadModal();
+            } else {
+                // Fallback: Show instructions for setting up Google Drive
+                alert(`To download "${title}", please:\n\n1. Upload the PDF to Google Drive\n2. Make it publicly accessible (Anyone with the link can view)\n3. Copy the file ID from the share link\n4. Add the driveId to the book data\n\nFor the link you provided, the file ID is: 13TJwxcW9ZLCZDTEro1qrlqZbyop5PJbN\n\nMake sure your Google Drive file sharing is set to "Anyone with the link can view"`);
+            }
+        }
+
+        function showDownloadModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Category filter functionality
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderBooks();
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderBooks();
+        });
+
+        // Initial render
+        renderBooks();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96c6b1e5970333d8',t:'MTc1NDczNjY1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
